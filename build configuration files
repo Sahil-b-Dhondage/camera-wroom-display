@@ -1,0 +1,76 @@
+# Makefile for ESP32 Modular Display System
+# This assumes you're using PlatformIO or Arduino IDE
+
+# Project structure:
+# src/
+#   ├── main.cpp
+#   ├── config.h
+#   ├── config.cpp
+#   ├── display_manager.h
+#   ├── display_manager.cpp
+#   ├── frame_processor.h
+#   ├── frame_processor.cpp
+#   ├── network_manager.h
+#   ├── network_manager.cpp
+#   ├── performance_monitor.h
+#   ├── performance_monitor.cpp
+#   ├── task_manager.h
+#   └── task_manager.cpp
+
+# platformio.ini configuration:
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+monitor_speed = 115200
+
+# Libraries
+lib_deps = 
+    bodmer/TFT_eSPI@^2.5.0
+    bodmer/TJpg_Decoder@^1.0.8
+
+# Build flags for optimization
+build_flags = 
+    -DCORE_DEBUG_LEVEL=3
+    -O2
+    -DARDUINO_RUNNING_CORE=1
+    -DARDUINO_EVENT_RUNNING_CORE=1
+
+# Memory optimization
+board_build.partitions = huge_app.csv
+
+# Arduino IDE Libraries needed:
+# - TFT_eSPI by Bodmer
+# - TJpg_Decoder by Bodmer
+# - ESP32 Arduino Core
+
+# Compilation order (handled automatically by build system):
+# 1. config.cpp
+# 2. display_manager.cpp
+# 3. frame_processor.cpp  
+# 4. network_manager.cpp
+# 5. performance_monitor.cpp
+# 6. task_manager.cpp
+# 7. main.cpp
+
+# User_Setup.h for TFT_eSPI (place in TFT_eSPI library folder):
+# Example configuration for common ESP32 displays:
+
+# User_Setup.h content:
+# #define ILI9488_DRIVER
+# #define TFT_MISO 19
+# #define TFT_MOSI 23
+# #define TFT_SCLK 18
+# #define TFT_CS   15
+# #define TFT_DC    2
+# #define TFT_RST   4
+# #define LOAD_GLCD
+# #define LOAD_FONT2
+# #define LOAD_FONT4
+# #define LOAD_FONT6
+# #define LOAD_FONT7
+# #define LOAD_FONT8
+# #define LOAD_GFXFF
+# #define SMOOTH_FONT
+# #define SPI_FREQUENCY  27000000
+# #define SPI_READ_FREQUENCY  20000000
